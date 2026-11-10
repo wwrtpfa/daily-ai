@@ -1,0 +1,17 @@
+{
+  "repo": "ggml-org/llama.cpp",
+  "collectedAt": "2026-11-10T09:02:13Z",
+  "apiUrl": "https://api.github.com/repos/ggml-org/llama.cpp",
+  "stars": 133882,
+  "language": "C++",
+  "license": {
+    "key": "mit",
+    "name": "MIT License",
+    "spdx_id": "MIT",
+    "url": "https://api.github.com/licenses/mit",
+    "node_id": "MDc6TGljZW5zZTEz"
+  },
+  "pushedAt": "2026-11-10T08:57:17Z",
+  "archived": false,
+  "description": "LLM inference in C/C++"
+}

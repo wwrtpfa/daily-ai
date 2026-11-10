@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "entries": [
+    {
+      "date": "2026-11-10",
+      "itemId": "anthropic-fable-mythos-52",
+      "fingerprint": "a989f1582084d0cf153c32d2fa32483a4ec12dee696b65f0f20a1d5ab4b8abfd",
+      "urls": [
+        "https://www.anthropic.com/claude-fable-and-mythos-5-2"
+      ]
+    },
+    {
+      "date": "2026-11-10",
+      "itemId": "adobe-disney-alliance",
+      "fingerprint": "a38e8333ef55c6e595c303928655a14b90de07a4169f835980f3897c958766ba",
+      "urls": [
+        "https://news.adobe.com/news/2026/11/adobe-and-the-walt-disney-company-alliance"
+      ]
+    },
+    {
+      "date": "2026-11-10",
+      "itemId": "claude-code-21321",
+      "fingerprint": "ace31f3b0bb1b6f07ef93a70e921fede0960c848287ce911677409ebd0b28f56",
+      "urls": [
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.321"
+      ]
+    },
+    {
+      "date": "2026-11-10",
+      "itemId": "llama-cpp-b12244",
+      "fingerprint": "d646da872e9561cd891cfb438d2372e9f3a113befbe1e87ac360a119330574f3",
+      "urls": [
+        "https://github.com/ggml-org/llama.cpp/releases/tag/b12244"
+      ]
+    }
+  ]
+}

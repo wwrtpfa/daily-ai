@@ -1,0 +1,87 @@
+{
+  "color": {
+    "light": {
+      "background": "#e9edf3",
+      "text": "#283144",
+      "secondary": "#505c70",
+      "muted": "#657087",
+      "accent": "#4b628e",
+      "highlight": "#dfe7f39c",
+      "alternate": "#eef2f8",
+      "line": "#c6d0df99",
+      "backdrop": "#26324e66",
+      "surface": "#f8faff",
+      "rail": "#ffffff66",
+      "railText": "#283144",
+      "railMuted": "#62708a",
+      "railActive": "#ffffffa8"
+    },
+    "dark": {
+      "background": "#151c2c",
+      "text": "#e6ebf5",
+      "secondary": "#c0cadb",
+      "muted": "#a5b2c8",
+      "accent": "#b7c9ed",
+      "highlight": "#34435eaa",
+      "alternate": "#283449",
+      "line": "#7a8da047",
+      "backdrop": "#080d1b88",
+      "surface": "#253149",
+      "rail": "#26314888",
+      "railText": "#e6ebf5",
+      "railMuted": "#aab7cc",
+      "railActive": "#8196bc33"
+    }
+  },
+  "typography": {
+    "hero": 44,
+    "title": 22,
+    "body": 16,
+    "meta": 13,
+    "lineHeight": 1.8
+  },
+  "layout": {
+    "readingWidth": 1120,
+    "shellWidth": 1400,
+    "sectionGap": 40,
+    "itemGap": 24
+  },
+  "art": {
+    "background": "#e5ebf3",
+    "panel": "#ffffff55",
+    "line": "#ffffffcc",
+    "text": "#354866",
+    "secondary": "#607493",
+    "node": "#ffffffaa",
+    "ink": "#354866",
+    "glow": "#bdc9e6",
+    "tint": "#a6b8d8",
+    "shadow": "#637997"
+  },
+  "material": {
+    "light": {
+      "glass": "#ffffff70",
+      "glassStrong": "#ffffffb3",
+      "glassEdge": "#ffffffd9",
+      "glassShade": "#7185a71a",
+      "ambientOne": "#b9bddb",
+      "ambientTwo": "#bad3de",
+      "ambientThree": "#e6d9d6",
+      "ambientClear": "#e9edf300",
+      "buttonText": "#ffffff",
+      "shadow": "#62708d18"
+    },
+    "dark": {
+      "glass": "#27314980",
+      "glassStrong": "#29364edb",
+      "glassEdge": "#b4c3df33",
+      "glassShade": "#050b1c33",
+      "ambientOne": "#454b70",
+      "ambientTwo": "#254b59",
+      "ambientThree": "#54475c",
+      "ambientClear": "#151c2c00",
+      "buttonText": "#1c2942",
+      "shadow": "#050b1c40"
+    }
+  }
+}

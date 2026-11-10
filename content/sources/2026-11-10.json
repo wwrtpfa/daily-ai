@@ -1,0 +1,65 @@
+{
+  "checkedAt": "2026-11-10T09:02:13Z",
+  "sources": [
+    {
+      "id": "anthropic-52",
+      "url": "https://www.anthropic.com/claude-fable-and-mythos-5-2",
+      "title": "Claude Fable 5.2 and Mythos 5.2",
+      "publisher": "Anthropic",
+      "publishedAt": "2026-11-09",
+      "publishedPrecision": "day",
+      "checkedAt": "2026-11-10T09:02:13Z",
+      "verification": "web-search-fulltext"
+    },
+    {
+      "id": "adobe-disney",
+      "url": "https://news.adobe.com/news/2026/11/adobe-and-the-walt-disney-company-alliance",
+      "title": "Adobe and The Walt Disney Company Announce Multi-Year Strategic Alliance",
+      "publisher": "Adobe",
+      "publishedAt": "2026-11-09",
+      "publishedPrecision": "day",
+      "checkedAt": "2026-11-10T09:02:13Z",
+      "verification": "http-fulltext"
+    },
+    {
+      "id": "claude-21321",
+      "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.321",
+      "title": "Claude Code v2.1.321",
+      "publisher": "anthropics/claude-code",
+      "publishedAt": "2026-11-09T19:22:30Z",
+      "publishedPrecision": "second",
+      "checkedAt": "2026-11-10T09:02:13Z",
+      "verification": "github-api"
+    },
+    {
+      "id": "llama-b12244",
+      "url": "https://github.com/ggml-org/llama.cpp/releases/tag/b12244",
+      "title": "llama.cpp b12244",
+      "publisher": "ggml-org/llama.cpp",
+      "publishedAt": "2026-11-10T07:25:25Z",
+      "publishedPrecision": "second",
+      "checkedAt": "2026-11-10T09:02:13Z",
+      "verification": "github-api"
+    }
+  ],
+  "notes": [
+    "Anthropic 原文已由联网检索读取全文；本机直连出现 TLS 错误，记录两种结果，不伪造 HTTP 200。",
+    "来源只标日期时保留日期精度，不虚构发布时间和时区。",
+    "GitHub 星标是采集时累计值；缺少历史快照，日周增量为 null。",
+    "后续单独尝试再次抓取完整响应时发生 RemoteDisconnected，该次抓取未记为成功；全文事实依据分别为联网工具已读的 Anthropic 原文、Adobe 公告全文与 GitHub API 发布说明。"
+  ],
+  "checks": [
+    {
+      "command": "python3 scripts/validate-content.py --check-links",
+      "result": "passed",
+      "scope": "4 URLs returned HTTP 200; response prefix read, not a full-text extraction",
+      "recordedAt": "2026-11-10T09:27:24+00:00",
+      "urls": [
+        "https://www.anthropic.com/claude-fable-and-mythos-5-2",
+        "https://news.adobe.com/news/2026/11/adobe-and-the-walt-disney-company-alliance",
+        "https://github.com/anthropics/claude-code/releases/tag/v2.1.321",
+        "https://github.com/ggml-org/llama.cpp/releases/tag/b12244"
+      ]
+    }
+  ]
+}

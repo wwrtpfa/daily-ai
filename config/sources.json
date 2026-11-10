@@ -1,0 +1,4 @@
+{
+  "allowedHosts": ["www.anthropic.com", "anthropic.com", "news.adobe.com", "github.com", "api.github.com", "openai.com", "blog.google", "blogs.nvidia.com", "nvidianews.nvidia.com", "huggingface.co", "arxiv.org"],
+  "policy": "优先官方原文、仓库 release、论文原文；聚合日报仅作线索。新增来源须审查并同步本白名单。"
+}

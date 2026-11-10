@@ -1,0 +1,13 @@
+{
+  "timezone": "Asia/Shanghai",
+  "mainCronUtc": "17 22 * * *",
+  "amendmentCronUtc": "43 4 * * *",
+  "mainWindowHours": 24,
+  "amendmentWindowHours": 6,
+  "deadlineLocal": "07:00",
+  "timeoutMinutes": 20,
+  "maxInputTokensPerChinaDay": 120000,
+  "maxOutputTokensPerChinaDay": 20000,
+  "maxAttemptsPerStage": 2,
+  "installed": false
+}

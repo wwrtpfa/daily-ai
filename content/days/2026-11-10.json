@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-10",
+  "timezone": "Asia/Shanghai",
+  "no": 1,
+  "status": "ready",
+  "generatedAt": "2026-11-10T09:02:13Z",
+  "window": {
+    "start": "2026-11-09T06:17:00+08:00",
+    "end": "2026-11-10T09:02:13Z",
+    "mode": "manual-backfill",
+    "note": "首期人工补刊，覆盖昨日早间至本次采集；非 07:00 准点发布记录。日期精度来源只按日期纳入并保留原精度。"
+  },
+  "headline": "模型向前，<mark class=\"m1\">边界也要跟上</mark>。",
+  "short": "模型、权限与生产流程",
+  "lede": "新模型、创意工具和本地推理都在更新。今天沿着四条官方动态，看能力如何进入真实工作流。",
+  "themes": [],
+  "items": [
+    {
+      "id": "anthropic-fable-mythos-52",
+      "cat": "AI 模型",
+      "title": "Fable 与 Mythos 5.2 发布：同一底座，不同开放边界",
+      "verdict": "Anthropic 更新面向复杂技术任务的模型，并区分通用访问与需审核的专业访问。",
+      "why": "值得关注的是能力与访问策略同步分层；评估接入时，除了看模型表现，还要确认任务是否符合开放范围。",
+      "facts": [
+        "官方发布日期为 11 月 9 日；Fable 5.2 与 Mythos 5.2 使用同一底层模型。",
+        "Fable 加入网络安全与生物领域防滥用措施；Mythos 需通过相关验证计划申请访问。",
+        "厂商将两者定位于编码、推理、视觉等复杂技术工作。"
+      ],
+      "scenes": [
+        "为复杂代码库任务做小规模对照测试。",
+        "研究专业模型的访问资格与安全边界。"
+      ],
+      "event": "Anthropic 发布 Claude Fable 5.2 与 Claude Mythos 5.2。",
+      "caveat": "性能提升与工程案例来自厂商自测，本站未复跑；专业访问需审批，不代表所有账户立即可用。",
+      "sources": [
+        {
+          "id": "anthropic-52",
+          "url": "https://www.anthropic.com/claude-fable-and-mythos-5-2",
+          "title": "Claude Fable 5.2 and Mythos 5.2",
+          "publisher": "Anthropic",
+          "publishedAt": "2026-11-09",
+          "publishedPrecision": "day",
+          "checkedAt": "2026-11-10T09:02:13Z",
+          "verification": "web-search-fulltext"
+        }
+      ],
+      "src": "官方原文"
+    },
+    {
+      "id": "adobe-disney-alliance",
+      "cat": "AI 应用",
+      "title": "Adobe 与迪士尼结盟：生成式 AI 进入内部创意流程",
+      "verdict": "双方宣布多年合作，围绕迪士尼资产定制模型，并向创意团队提供 Adobe 工具与工程支持。",
+      "why": "观察重点是模型如何嵌入有版权边界的生产流程；“能生成图”正在变成内部工具、专有资产与人员协作的组合。",
+      "facts": [
+        "公告于 11 月 9 日发布，合作涉及 Firefly、Firefly Foundry、Premiere 与 Photoshop。",
+        "公告描述了手绘草图转概念图，以及生成符合品牌风格素材的定制模型。",
+        "StudioLAB 与 ESPN Edge 参与探索创意工作流和体育叙事。"
+      ],
+      "scenes": [
+        "大型内容团队评估私有资产上的定制生成流程。",
+        "创意部门梳理从概念草图到素材审查的协作环节。"
+      ],
+      "event": "Adobe 与 The Walt Disney Company 宣布多年战略合作。",
+      "caveat": "这是合作公告和厂商展示，不是对外开放的迪士尼模型服务；商用安全表述来自公告，本站未独立审核训练授权与产出。",
+      "sources": [
+        {
+          "id": "adobe-disney",
+          "url": "https://news.adobe.com/news/2026/11/adobe-and-the-walt-disney-company-alliance",
+          "title": "Adobe and The Walt Disney Company Announce Multi-Year Strategic Alliance",
+          "publisher": "Adobe",
+          "publishedAt": "2026-11-09",
+          "publishedPrecision": "day",
+          "checkedAt": "2026-11-10T09:02:13Z",
+          "verification": "http-fulltext"
+        }
+      ],
+      "src": "官方原文"
+    },
+    {
+      "id": "claude-code-21321",
+      "cat": "GITHUB · AI CODING",
+      "title": "Claude Code v2.1.321：先看权限和 OAuth 修复",
+      "verdict": "这次更新除了接入新模型，还修复 MCP OAuth 重定向与多种文件写入权限判断问题。",
+      "why": "编码 Agent 的交付依赖工具权限。模型升级之外，凭据流向和文件边界同样影响团队能否放心使用。",
+      "facts": [
+        "GitHub release 发布时间为 11 月 10 日 03:22（北京时间）。",
+        "更新说明列出 MCP OAuth 重定向向其他主机发送敏感信息的问题修复。",
+        "更新说明还列出只读 Bash 越过沙箱提示、目录写入权限与 cp/mv 目标文件规则的修复。"
+      ],
+      "scenes": [
+        "使用 MCP OAuth 的团队检查版本并测试登录流程。",
+        "维护 Agent 权限规则的团队回归沙箱与文件写入提示。"
+      ],
+      "event": "anthropics/claude-code 发布 v2.1.321。",
+      "caveat": "上述为维护者发布说明；本站未复现漏洞或验证修复效果，不推断 CVE 编号与受影响版本范围。",
+      "sources": [
+        {
+          "id": "claude-21321",
+          "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.321",
+          "title": "Claude Code v2.1.321",
+          "publisher": "anthropics/claude-code",
+          "publishedAt": "2026-11-09T19:22:30Z",
+          "publishedPrecision": "second",
+          "checkedAt": "2026-11-10T09:02:13Z",
+          "verification": "github-api"
+        }
+      ],
+      "src": "官方原文"
+    },
+    {
+      "id": "llama-cpp-b12244",
+      "cat": "GITHUB · 基础设施",
+      "title": "llama.cpp b12244：Intel 推理构建链继续更新",
+      "verdict": "这一版更新 CI 中的 Intel 相关依赖；使用该后端的团队可据此检查构建兼容性。",
+      "why": "本地推理不只取决于模型文件，也取决于硬件后端和构建环境。依赖更新值得记录，但不能直接换算成性能提升。",
+      "facts": [
+        "GitHub release 发布时间为 11 月 10 日 15:25（北京时间）。",
+        "发布说明对应 PR #31540，更新 oneAPI 2026.2、oneDNN 2026.1 与 Level Zero SDK 1.34.0。",
+        "release 同时提供多个系统与硬件后端的构建产物。"
+      ],
+      "scenes": [
+        "在 Intel 环境中核对自有构建链与依赖版本。",
+        "为本地推理升级准备加载模型和最小推理回归。"
+      ],
+      "event": "ggml-org/llama.cpp 发布 b12244。",
+      "caveat": "这是构建依赖更新，不能推导吞吐、质量或延迟提升；本站未运行二进制或做硬件实测。",
+      "sources": [
+        {
+          "id": "llama-b12244",
+          "url": "https://github.com/ggml-org/llama.cpp/releases/tag/b12244",
+          "title": "llama.cpp b12244",
+          "publisher": "ggml-org/llama.cpp",
+          "publishedAt": "2026-11-10T07:25:25Z",
+          "publishedPrecision": "second",
+          "checkedAt": "2026-11-10T09:02:13Z",
+          "verification": "github-api"
+        }
+      ],
+      "src": "官方原文"
+    }
+  ],
+  "brief": [
+    {
+      "itemId": "anthropic-fable-mythos-52",
+      "text": "Anthropic 更新面向复杂技术任务的模型，并区分通用访问与需审核的专业访问。"
+    },
+    {
+      "itemId": "adobe-disney-alliance",
+      "text": "双方宣布多年合作，围绕迪士尼资产定制模型，并向创意团队提供 Adobe 工具与工程支持。"
+    },
+    {
+      "itemId": "claude-code-21321",
+      "text": "这次更新除了接入新模型，还修复 MCP OAuth 重定向与多种文件写入权限判断问题。"
+    },
+    {
+      "itemId": "llama-cpp-b12244",
+      "text": "这一版更新 CI 中的 Intel 相关依赖；使用该后端的团队可据此检查构建兼容性。"
+    }
+  ],
+  "amendments": []
+}
