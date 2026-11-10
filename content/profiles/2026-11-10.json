@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-10",
+  "note": "介绍层：独立于已发布的项目快照 content/projects/<date>.json，可迭代；不改写已发布事实。命令、清单与描述据官方 README 归纳，含编辑判断，来源见各档案。",
+  "editorialNote": "以下介绍据官方 README 与 GitHub API 快照归纳，含编辑判断；命令与数字可回查来源。本站未运行安装、示例或性能实测。",
+  "profiles": [
+    {
+      "name": "anthropics/claude-code",
+      "todayItem": "claude-code-21321",
+      "problem": "官方 README 把它定义为「住在终端里的编码工具」：理解你的代码库，用自然语言交代任务后执行常规改动、解释复杂代码并处理 Git 工作流，也能在 IDE 或 GitHub 上 @claude 使用。它改变的不是某一个编辑器功能，而是「读代码—改文件—跑命令—提交」这几步之间反复切换的往返。",
+      "whoFor": [
+        "在既有仓库里实现需求、需要 Agent 读懂整个代码库的开发者。",
+        "要让 Agent 在权限约束下执行任务的团队（配合沙箱与文件写入规则）。",
+        "在 GitHub issue / PR 里 @claude 做协作的团队。"
+      ],
+      "howTo": {
+        "intro": "官方 Get started：安装后进入项目目录运行 claude。README 同时给出 macOS / Linux、Homebrew、Windows 与 WinGet 四种方式。",
+        "steps": [
+          {"label": "安装 · macOS / Linux（官方推荐）", "cmd": "curl -fsSL https://claude.ai/install.sh | bash"},
+          {"label": "安装 · Homebrew", "cmd": "brew install --cask claude-code"},
+          {"label": "安装 · Windows（官方推荐）", "cmd": "irm https://claude.ai/install.ps1 | iex"},
+          {"label": "开始使用", "cmd": "cd your-project && claude"}
+        ],
+        "note": "README 明确 npm 安装方式已弃用（npm install -g @anthropic-ai/claude-code），并标注 Node.js 18+ 要求；安装与卸载细节见官方 setup 文档。"
+      },
+      "caveat": "专有条款，GitHub API 未识别 SPDX，不要按宽松开源许可假设再发行。README 说明会收集代码采纳/拒绝、相关会话数据与 /bug 反馈；生产使用前需核对官方数据策略。安装命令、权限行为与今日 v2.1.321 的修复效果本站均未实测。",
+      "backends": [],
+      "sources": [
+        {"url": "https://github.com/anthropics/claude-code/blob/main/README.md", "title": "官方 README · Get started / Data collection"},
+        {"url": "https://github.com/anthropics/claude-code", "title": "仓库与 README"},
+        {"url": "https://api.github.com/repos/anthropics/claude-code", "title": "GitHub API 快照"}
+      ]
+    },
+    {
+      "name": "ggml-org/llama.cpp",
+      "todayItem": "llama-cpp-b12244",
+      "problem": "README 的目标是「以最少配置、在从本地到云端的广泛硬件上运行 LLM / VLM 推理」。实现是无外部依赖的纯 C/C++，支持 1.5–8 bit 整数量化降低内存占用，并提供 CUDA / Metal / Vulkan / SYCL 等后端与 CPU+GPU 混合推理——模型大于显存时也能部分加速。",
+      "whoFor": [
+        "在本机加载 GGUF 模型、不想先搭一套服务集群的个人开发者。",
+        "需要针对 Apple Silicon / NVIDIA / AMD / Intel / 专用 NPU 选择后端的部署团队。",
+        "要用 OpenAI 兼容 API 把本地模型接进应用的人（llama serve）。"
+      ],
+      "howTo": {
+        "intro": "官方 Quick start 提供脚本安装、Docker、预编译二进制与源码构建四种方式；安装后可直接从 Hugging Face 拉模型运行。",
+        "steps": [
+          {"label": "脚本安装 · macOS / Linux", "cmd": "curl -LsSf https://llama.app/install.sh | sh"},
+          {"label": "命令行直接跑一个模型", "cmd": "llama cli -hf ggml-org/Qwen3.5-0.8B-GGUF"},
+          {"label": "启动 OpenAI 兼容 API 服务", "cmd": "llama serve -hf ggml-org/Qwen3.5-0.8B-GGUF"}
+        ],
+        "note": "Windows 可用 irm https://llama.app/install.ps1 | iex；Docker 与源码构建分别见 docs/docker.md、docs/build.md。"
+      },
+      "caveat": "后端清单来自 README 的 Supported backends 表，其中 OpenVINO 标为 [In Progress]，不等于稳定可用。量化、混合推理与性能描述均为项目自述，本站未编译、未跑任何后端或基准。今日 b12244 更新的是 Intel 相关构建依赖，不能推导吞吐或延迟提升。",
+      "backends": [
+        {"name": "BLAS", "target": "通用"},
+        {"name": "BLIS", "target": "通用"},
+        {"name": "CANN", "target": "华为昇腾 NPU"},
+        {"name": "CUDA", "target": "NVIDIA GPU"},
+        {"name": "HIP", "target": "AMD GPU"},
+        {"name": "Hexagon", "target": "Snapdragon"},
+        {"name": "IBM zDNN", "target": "IBM Z / LinuxONE"},
+        {"name": "MUSA", "target": "摩尔线程 GPU"},
+        {"name": "Metal", "target": "Apple Silicon"},
+        {"name": "OpenCL", "target": "Adreno GPU"},
+        {"name": "OpenVINO", "target": "Intel CPU / GPU / NPU（In Progress）"},
+        {"name": "RPC", "target": "通用"},
+        {"name": "SYCL", "target": "Intel GPU"},
+        {"name": "VirtGPU", "target": "VirtGPU API"},
+        {"name": "Vulkan", "target": "GPU"},
+        {"name": "WebGPU", "target": "通用"},
+        {"name": "ZenDNN", "target": "AMD CPU"}
+      ],
+      "sources": [
+        {"url": "https://github.com/ggml-org/llama.cpp/blob/master/README.md", "title": "官方 README · Quick start / Supported backends"},
+        {"url": "https://github.com/ggml-org/llama.cpp/blob/master/docs/build.md", "title": "官方构建指南"},
+        {"url": "https://api.github.com/repos/ggml-org/llama.cpp", "title": "GitHub API 快照"}
+      ]
+    },
+    {
+      "name": "microsoft/agent-framework",
+      "todayItem": null,
+      "problem": "微软把它定位为「面向生产级 AI Agent 与多 Agent 工作流的多语言框架」，Python 与 .NET 为主，Go SDK 另有独立仓库。它解决的是从原型走到生产之间的编排问题：图结构工作流支持顺序、并发、交接与群组协作，并带 checkpointing、OpenTelemetry 可观测性、human-in-the-loop 与中间件。",
+      "whoFor": [
+        "要把 Agent 从原型搬到生产、需要耐久性与可重启的团队。",
+        "需要多 Agent 编排（顺序 / 并发 / 交接 / 群组）而非单次提示循环的开发者。",
+        "Python 或 .NET 技术栈，且接受 Azure / Foundry 相关依赖的团队。",
+        "从 Semantic Kernel 或 AutoGen 迁移、需要官方迁移指南的团队。"
+      ],
+      "howTo": {
+        "intro": "官方 Quickstart 的最小示例依赖 Microsoft Foundry 与 Azure 凭据，先用 az login 准备凭据。",
+        "steps": [
+          {"label": "安装 · Python", "cmd": "pip install agent-framework"},
+          {"label": "安装 · .NET", "cmd": "dotnet add package Microsoft.Agents.AI"},
+          {"label": "准备 Azure 凭据", "cmd": "az login"},
+          {"label": "最小示例 · Python（摘自官方 Quickstart）", "cmd": "from agent_framework import Agent\nfrom agent_framework.foundry import FoundryChatClient\nfrom azure.identity import AzureCliCredential\n\nagent = Agent(client=FoundryChatClient(credential=AzureCliCredential()),\n              name=\"HaikuAgent\",\n              instructions=\"You are an upbeat assistant that writes beautifully.\")\nprint(await agent.run(\"Write a haiku about Microsoft Agent Framework.\"))"}
+        ],
+        "note": "示例需在 async 函数中使用 asyncio.run(main()) 调用；实验模块 agent-framework-lab 需单独安装。.NET 示例另需 Microsoft.Agents.AI.Foundry、Azure.AI.Projects 等包。"
+      },
+      "caveat": "Quickstart 不是零配置本地示例，依赖 Microsoft Foundry 与 Azure 凭据。README 明确：接入第三方模型/服务器时的数据流、成本与合规边界由使用者负责，生产用需自行实施 responsible AI 缓解措施。仓库主语言字段为 Python，但框架同时提供 .NET 与独立 Go SDK。本站未运行示例、未评估稳定性。",
+      "backends": [],
+      "sources": [
+        {"url": "https://github.com/microsoft/agent-framework/blob/main/README.md", "title": "官方 README · Getting Started / Important Notes"},
+        {"url": "https://learn.microsoft.com/en-us/agent-framework/", "title": "MS Learn 文档（README 引用）"},
+        {"url": "https://api.github.com/repos/microsoft/agent-framework", "title": "GitHub API 快照"}
+      ]
+    }
+  ]
+}

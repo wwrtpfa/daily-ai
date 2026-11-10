@@ -31,6 +31,71 @@ def stamp(v):
     assert value.tzinfo is not None, f'timestamp needs timezone: {v}'
     return value
 
+# The editorial layer is iterable, but it may only add prose — never rewrite a
+# published snapshot field. Allowed keys are the contract boundary.
+PROFILE_KEYS={'name','todayItem','problem','whoFor','howTo','caveat','backends','sources','lens'}
+PROFILE_DOC_KEYS={'schemaVersion','date','note','editorialNote','profiles'}
+
+def validate_profiles(dt, issue, published):
+    path=ROOT/'content/profiles'/f'{dt}.json'
+    if not path.is_file():
+        return  # editorial layer is optional; the snapshot remains the baseline
+    doc=json.loads(path.read_text())
+    assert set(doc)<=PROFILE_DOC_KEYS, f'{dt}: unexpected profile document keys'
+    assert doc['schemaVersion']==1 and doc['date']==dt
+    required_text(doc,('editorialNote','note'))
+    names={repo['name'] for repo in published['projects']}
+    ids={it['id'] for it in issue['items']}
+    seen=set()
+    for prof in doc['profiles']:
+        assert set(prof)<=PROFILE_KEYS, f'{dt}: profile may not override snapshot fields: {prof.get("name")}'
+        required_text(prof,('name','problem','caveat'))
+        assert prof['name'] in names and prof['name'] not in seen, f'{dt}: profile name mismatch: {prof["name"]}'
+        seen.add(prof['name'])
+        assert isinstance(prof.get('whoFor'),list) and prof['whoFor'] and all(isinstance(v,str) and v.strip() for v in prof['whoFor'])
+        how=prof.get('howTo')
+        assert isinstance(how,dict), f'{dt}: {prof["name"]} needs howTo'
+        required_text(how,('intro','note'))
+        assert isinstance(how.get('steps'),list) and how['steps']
+        for step in how['steps']:
+            required_text(step,('label','cmd'))
+        assert isinstance(prof.get('backends',[]),list)
+        for backend in prof.get('backends',[]):
+            required_text(backend,('name','target'))
+        assert prof.get('sources') and all(urlsplit(v['url']).scheme=='https' and v.get('title') for v in prof['sources']), f'{dt}: profile needs real source links'
+        today_item=prof.get('todayItem')
+        assert today_item is None or today_item in ids, f'{dt}: todayItem must reference a published item'
+    assert seen==names, f'{dt}: every published project needs an editorial profile'
+
+
+DECISION_DOC_KEYS={'schemaVersion','date','note','editorialNote','headline','accent','summary','lens','groups','items'}
+DECISION_ITEM_KEYS={'group','level','action','relevantIf','skipIf'}
+
+def validate_decisions(dt, issue):
+    path=ROOT/'content/decisions'/f'{dt}.json'
+    if not path.is_file():
+        return  # decision layer is optional; older editions keep the editorial hero
+    doc=json.loads(path.read_text())
+    assert set(doc)<=DECISION_DOC_KEYS, f'{dt}: unexpected decision document keys'
+    assert doc['schemaVersion']==1 and doc['date']==dt
+    required_text(doc,('note','editorialNote','headline','accent','summary'))
+    assert doc['accent'] in doc['headline'], f'{dt}: accent must appear in headline'
+    group_keys=set()
+    for group in doc['groups']:
+        required_text(group,('key','label','note'))
+        assert group['key'] not in group_keys, f'{dt}: duplicate decision group'
+        group_keys.add(group['key'])
+    for lens_item in doc['lens']:
+        required_text(lens_item,('label','target'))
+        assert lens_item['target'].startswith('#'), f'{dt}: lens must be an in-page anchor'
+    ids={it['id'] for it in issue['items']}
+    assert set(doc['items'])==ids, f'{dt}: every published item needs exactly one decision'
+    for item_id, decision in doc['items'].items():
+        assert set(decision)<=DECISION_ITEM_KEYS, f'{dt}: {item_id} may not carry published facts'
+        required_text(decision,('group','level','action','relevantIf','skipIf'))
+        assert decision['group'] in group_keys, f'{dt}: unknown decision group for {item_id}'
+
+
 def run(check_links=False):
     allow=json.loads((ROOT/'config/sources.json').read_text())['allowedHosts']
     paths=sorted((ROOT/'content/days').glob('*.json'))
@@ -103,6 +168,8 @@ def run(check_links=False):
         old_projects=subprocess.run(['git','show',f'HEAD:content/projects/{dt}.json'],cwd=ROOT,capture_output=True,text=True)
         if old_projects.returncode==0:
             assert json.loads(old_projects.stdout)==p, 'published project snapshot must not be rewritten'
+        validate_profiles(dt, d, p)
+        validate_decisions(dt, d)
     if check_links:
         for url,s in urls.items():
             # The article can be read by the Agent's web tool when this machine's TLS fails.

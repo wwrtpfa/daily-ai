@@ -6,6 +6,8 @@ const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const data = JSON.parse($('#prototype-data').textContent);
 const page = document.body.dataset;
 const issue = data.issue;
+// Reading order follows the decision layer when present; item numbers stay stable.
+const order = Array.isArray(data.decisionOrder) ? data.decisionOrder : (issue ? issue.items.map((_, i) => i) : []);
 const selection = new Set();
 let toastTimer;
 let shareFrom = null;
@@ -53,7 +55,7 @@ function syncSelection() {
 }
 
 function shareRows() {
-  return issue.items.map((item, index) => ({ item, index })).filter(({ index }) => selection.has(index));
+  return order.map(index => ({ item: issue.items[index], index })).filter(({ index }) => selection.has(index));
 }
 
 function shareText() {
@@ -159,7 +161,8 @@ function openShare(trigger) {
   options.replaceChildren();
   const legend = document.createElement('legend'); legend.textContent = '选择内容'; options.append(legend);
   const all = document.createElement('button'); all.type = 'button'; all.dataset.action = 'select-all'; all.className = 'share-all'; all.textContent = '全选 / 清空'; options.append(all);
-  issue.items.forEach((item,index) => {
+  order.forEach(index => {
+    const item = issue.items[index];
     const label = document.createElement('label');
     const input = document.createElement('input'); input.type='checkbox'; input.checked=selection.has(index); input.dataset.shareIndex=index;
     const text = document.createElement('span'); text.textContent=`${String(index+1).padStart(2,'0')}  ${item.title}`;

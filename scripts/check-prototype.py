@@ -3,8 +3,14 @@ from pathlib import Path
 from html.parser import HTMLParser
 from urllib.parse import urlsplit, unquote
 import json
+import re
 import xml.etree.ElementTree as ET
 from content_data import load_content
+
+
+def plain(value):
+    return re.sub('<[^>]+>', '', value)
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / 'prototype'
@@ -52,6 +58,26 @@ for date, issue in fixture['ISSUES'].items():
     assert (SITE / 'downloads' / f'{date}.md').is_file()
 assert all(path.stat().st_size < 30 * 1024 for path in pages), 'HTML budget exceeded'
 assert all('演示' not in path.read_text() for path in pages), 'demo leaked into published pages'
+# The dossier and the real-snapshot chart must be static HTML, not JS-rendered.
+projects_html = (SITE/'projects.html').read_text()
+assert projects_html.count('class="bar-row"') == len(fixture['SNAPSHOTS']), 'one bar per real snapshot'
+assert 'class="bar-fill"' in projects_html and 'style="width:' in projects_html
+assert all(f"{snap['stars']:,}" in projects_html for snap in fixture['SNAPSHOTS'].values()), 'chart must use real star counts'
+assert '快照明细' in projects_html and 'data-table' in projects_html, 'chart needs a plain-text equivalent'
+for heading in ('解决什么','谁在用','怎么开始','什么时候别用 / 边界','硬件后端'):
+    assert heading in projects_html, f'static dossier heading missing: {heading}'
+assert '不是趋势线' in projects_html, 'single snapshot must be labelled as not a trend'
+# Decision-first daily page: result first, then grouped items with an explicit skip line.
+today = fixture['DATES'][-1]
+decision = fixture['DECISIONS'].get(today)
+if decision:
+    for page in (SITE/'index.html', SITE/'d'/f'{today}.html'):
+        html = page.read_text()
+        assert 'decision-band' in html and '与你有关，如果' in html
+        assert html.count('class="item decision-item"') == len(fixture['ISSUES'][today]['items'])
+        assert html.count('class="decision-group"') == len(decision['groups'])
+        assert all(f'id="group-{g["key"]}"' in html for g in decision['groups'])
+        assert plain(fixture['ISSUES'][today]['headline']) in html, 'published headline must stay visible'
 assert '127.0.0.1' not in (SITE/'feed.xml').read_text()
 for dt,issue in fixture['ISSUES'].items():
     text=(SITE/'d'/f'{dt}.html').read_text()
