@@ -1,0 +1,101 @@
+{
+  "checkedAt": "2026-11-12T17:40:00Z",
+  "sources": [
+    {
+      "id": "google-decisions-api",
+      "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api/",
+      "title": "Gemini Decisions API: Fast, calibrated multimodal decisions",
+      "publisher": "Google",
+      "publishedAt": "2026-11-11T18:00:00Z",
+      "publishedPrecision": "second",
+      "checkedAt": "2026-11-12T17:40:00Z",
+      "verification": "http-fulltext"
+    },
+    {
+      "id": "browser-use-103",
+      "url": "https://github.com/browser-use/browser-use/releases/tag/1.0.3",
+      "title": "browser-use 1.0.3",
+      "publisher": "browser-use/browser-use",
+      "publishedAt": "2026-11-12T16:52:54Z",
+      "publishedPrecision": "second",
+      "checkedAt": "2026-11-12T17:40:00Z",
+      "verification": "github-api"
+    },
+    {
+      "id": "codex-01672",
+      "url": "https://github.com/openai/codex/releases/tag/rust-v0.167.2",
+      "title": "Codex rust-v0.167.2",
+      "publisher": "openai/codex",
+      "publishedAt": "2026-11-11T22:44:46Z",
+      "publishedPrecision": "second",
+      "checkedAt": "2026-11-12T17:40:00Z",
+      "verification": "github-api"
+    },
+    {
+      "id": "llama-b12316",
+      "url": "https://github.com/ggml-org/llama.cpp/releases/tag/b12316",
+      "title": "llama.cpp b12316",
+      "publisher": "ggml-org/llama.cpp",
+      "publishedAt": "2026-11-12T06:25:50Z",
+      "publishedPrecision": "second",
+      "checkedAt": "2026-11-12T17:40:00Z",
+      "verification": "github-api"
+    },
+    {
+      "id": "llama-b12317",
+      "url": "https://github.com/ggml-org/llama.cpp/releases/tag/b12317",
+      "title": "llama.cpp b12317",
+      "publisher": "ggml-org/llama.cpp",
+      "publishedAt": "2026-11-12T06:58:35Z",
+      "publishedPrecision": "second",
+      "checkedAt": "2026-11-12T17:40:00Z",
+      "verification": "github-api"
+    },
+    {
+      "id": "llama-b12318",
+      "url": "https://github.com/ggml-org/llama.cpp/releases/tag/b12318",
+      "title": "llama.cpp b12318",
+      "publisher": "ggml-org/llama.cpp",
+      "publishedAt": "2026-11-12T11:36:10Z",
+      "publishedPrecision": "second",
+      "checkedAt": "2026-11-12T17:40:00Z",
+      "verification": "github-api"
+    },
+    {
+      "id": "llama-b12319",
+      "url": "https://github.com/ggml-org/llama.cpp/releases/tag/b12319",
+      "title": "llama.cpp b12319",
+      "publisher": "ggml-org/llama.cpp",
+      "publishedAt": "2026-11-12T16:34:48Z",
+      "publishedPrecision": "second",
+      "checkedAt": "2026-11-12T17:40:00Z",
+      "verification": "github-api"
+    }
+  ],
+  "notes": [
+    "窗口固定为北京时间 2026-11-12 01:20 至 2026-11-13 01:20（cutoff 不随采集漂移）。发布时间一律取官方元数据：Google 文章用页面 datePublished（含时区），GitHub 发布用 API published_at。",
+    "Google 原文经本机 curl 抓取全文成功（期间出现两次间歇性 TLS SSL_ERROR_SYSCALL，重试后成功），并用联网工具交叉阅读；未把搜索摘要当作事实依据。",
+    "GitHub 发布说明经 api.github.com 读取全文；仓库快照（stars/language/license/pushedAt/archived/description）来自同一 API，采集于 2026-11-12T17:35:00Z。",
+    "排除记录：Gemini CarPlay 公告 datePublished=2026-11-11T17:00Z，早于窗口起点 20 分钟，未纳入；Gemini in Chrome 一文为窗口内的简短使用指引（正文约 400 字符），无新发布事实，编辑判断不单独成条；OpenAI 11-12 Cyber 直播晚于窗口终点，且 openai.com 新闻页返回 403 / JS 验证墙，无法取得官方原文，未纳入。",
+    "openai.com/news 直连 403、huggingface.co/blog 抓取超时，均记录为失败，不伪造成功；两者未用作本期来源。",
+    "GitHub 星标是采集时累计值；缺少历史基线快照，日周增量统一 null，不填 0、不造趋势。",
+    "厂商数字（延迟、价格对比、内部用例效果）全部标注为官方口径，本站未复跑。"
+  ],
+  "checks": [
+    {
+      "command": "python3 scripts/validate-content.py --check-links",
+      "result": "passed",
+      "scope": "7 URLs returned HTTP 200; response prefix read, not a full-text extraction. Full text separately read via curl (Google) and GitHub API (releases).",
+      "recordedAt": "2026-11-12T17:52:00Z",
+      "urls": [
+        "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api/",
+        "https://github.com/browser-use/browser-use/releases/tag/1.0.3",
+        "https://github.com/openai/codex/releases/tag/rust-v0.167.2",
+        "https://github.com/ggml-org/llama.cpp/releases/tag/b12316",
+        "https://github.com/ggml-org/llama.cpp/releases/tag/b12317",
+        "https://github.com/ggml-org/llama.cpp/releases/tag/b12318",
+        "https://github.com/ggml-org/llama.cpp/releases/tag/b12319"
+      ]
+    }
+  ]
+}

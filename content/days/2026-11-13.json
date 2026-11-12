@@ -1,0 +1,199 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-13",
+  "timezone": "Asia/Shanghai",
+  "no": 1,
+  "status": "ready",
+  "generatedAt": "2026-11-12T17:45:00Z",
+  "window": {
+    "start": "2026-11-12T01:20:00+08:00",
+    "end": "2026-11-13T01:20:00+08:00",
+    "mode": "manual-backfill",
+    "note": "人工触发的首期重建刊，cutoff 固定为北京时间 2026-11-13 01:20，窗口为其前 24 小时。CarPlay 公告（11-11T17:00Z）早于窗口 20 分钟未纳入；OpenAI 11-12 直播晚于窗口且无官方原文可核，未纳入。"
+  },
+  "headline": "判断变成 API，<mark class=\"m1\">修复变成日常</mark>。",
+  "short": "决策 API 与三个开源项目的修复日",
+  "lede": "过去 24 小时：Google 把批量判断做成专用 API，browser-use、Codex CLI 与 llama.cpp 各自发布修复。只收窗口内官方来源，共 4 条。",
+  "themes": [],
+  "items": [
+    {
+      "id": "google-decisions-api",
+      "cat": "AI 模型",
+      "title": "Google 发布 Gemini Decisions API：一次前向算完最多 1000 个判断",
+      "verdict": "把「判断」从生成任务里拆出来，做成低延迟、只按输入计费的专用 API。",
+      "why": "闭集决策不再逐 token 生成答案，路由、审核与评分变成一次廉价调用；这是接口形态变化，不是又一个聊天模型。",
+      "facts": [
+        "新端点由 gemini-decision-1 驱动，经 AI Studio 的 Gemini API 提供；输入支持文本、图像、音频、视频与 PDF，上限 256K token。",
+        "单请求最多 1000 个独立问题，混合 yes/no（noul）、2–255 选项（choice）与有序量表（score）三种题型，每个答案附 0–1 置信度。",
+        "官方口径：单次前向打分，端到端 150–250ms；$0.10/百万输入 token，输出不计费，共享输入每请求计一次。",
+        "Google 自述内部用于 Notebook 路由、Stitch 画布、CC 表情与 Search 的 MCP 安全层；OpenRouter、LangChain、Vercel 等接入陆续上线。"
+      ],
+      "scenes": [
+        "Agent 的工具选择与模型路由：用置信度把模糊请求转给兜底或人工。",
+        "内容审核与政策检查：一份输入批量跑多条规则。",
+        "多模态质检：照片加文字一起评分，如官方示例的柜台清洁度检查。"
+      ],
+      "event": "2026-11-11 Google 官方博客发布 Decisions API 与 gemini-decision-1，当日起可在 AI Studio 取 key 使用，含免费层。",
+      "caveat": "延迟、校准与「便宜近 5 倍」均为厂商自测，本站未复跑；Google Cloud 支持标注 coming soon；内部用例效果为 Google 自述。",
+      "sources": [
+        {
+          "id": "google-decisions-api",
+          "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api/",
+          "title": "Gemini Decisions API: Fast, calibrated multimodal decisions",
+          "publisher": "Google",
+          "publishedAt": "2026-11-11T18:00:00Z",
+          "publishedPrecision": "second",
+          "checkedAt": "2026-11-12T17:40:00Z",
+          "verification": "http-fulltext"
+        }
+      ],
+      "src": "官方原文"
+    },
+    {
+      "id": "browser-use-103",
+      "cat": "GITHUB · 浏览器 AGENT",
+      "title": "browser-use 1.0.3：把 CLI 与云运行的毛边修掉",
+      "verdict": "一次稳定性小版本：CLI 管道、无浏览器环境、CDP 连接与取消下载都有明确修复。",
+      "why": "1.0 重写后接口快速变动，官方要求精确锁版；这类边界修复决定它能不能进生产。",
+      "facts": [
+        "--cli-mcp 在客户端提前关闭管道时干净退出，不再以 ExceptionGroup 报 exit 1。",
+        "无可远程调试浏览器或无显示环境时，CLI 自启 Chromium 并跨调用保留；browser-use --reload 关闭。",
+        "BU_CDP_URL 无监听时 3 秒报错并给出出路（原等 30 秒）；容器等另一 pid 命名空间的 Chrome 可经 DevToolsActivePort 接入。",
+        "取消的云运行 10 秒内完成下载拷贝（原每轮最长占浏览器 300 秒）；ActionResult 丢弃并警告所有被忽略的 0.x 字段。"
+      ],
+      "scenes": [
+        "在 CI 或无显示环境里跑浏览器 Agent 的团队。",
+        "把 browser-use 作为 MCP 服务接进编码 Agent 的用户。",
+        "从 0.x 迁移、需要清理旧字段告警的项目。"
+      ],
+      "event": "2026-11-12 browser-use 发布 1.0.3 稳定版，同日早些时候发布 1.0.3rc1。",
+      "caveat": "修复清单来自官方发布说明（PR #6383），未实测；官方要求 == 精确锁版；默认走 Browser Use 网关需 API key，本地浏览器另配。",
+      "sources": [
+        {
+          "id": "browser-use-103",
+          "url": "https://github.com/browser-use/browser-use/releases/tag/1.0.3",
+          "title": "browser-use 1.0.3",
+          "publisher": "browser-use/browser-use",
+          "publishedAt": "2026-11-12T16:52:54Z",
+          "publishedPrecision": "second",
+          "checkedAt": "2026-11-12T17:40:00Z",
+          "verification": "github-api"
+        }
+      ],
+      "src": "官方发布说明"
+    },
+    {
+      "id": "codex-01672",
+      "cat": "GITHUB · AI CODING",
+      "title": "Codex CLI rust-v0.167.2：Vertex AI 上默认增量推送工具更新",
+      "verdict": "只影响 Google Cloud Vertex AI 接入的小版本：工具更新改为增量发送，可配置回退。",
+      "why": "这是接入层变化而非模型能力变化；影响面窄，但做流式集成的人需要知道。",
+      "facts": [
+        "Codex 在 Google Cloud Vertex AI 上默认增量发送工具更新。",
+        "如需旧行为，在 config.toml 的 [features] 下设 incremental_tools_legacy_gcp = false。",
+        "变更对应 PR #60617 与 #60848。"
+      ],
+      "scenes": [
+        "通过 Vertex AI 使用 Codex CLI 的团队。",
+        "依赖工具输出流做 UI 或日志集成的开发者。"
+      ],
+      "event": "2026-11-11 openai/codex 发布 rust-v0.167.2。",
+      "caveat": "发布说明仅列这一条新特性，未实测；非 Vertex AI 用户不受影响。",
+      "sources": [
+        {
+          "id": "codex-01672",
+          "url": "https://github.com/openai/codex/releases/tag/rust-v0.167.2",
+          "title": "Codex rust-v0.167.2",
+          "publisher": "openai/codex",
+          "publishedAt": "2026-11-11T22:44:46Z",
+          "publishedPrecision": "second",
+          "checkedAt": "2026-11-12T17:40:00Z",
+          "verification": "github-api"
+        }
+      ],
+      "src": "官方发布说明"
+    },
+    {
+      "id": "llama-cpp-builds-1112",
+      "cat": "GITHUB · 基础设施",
+      "title": "llama.cpp 一天四个构建：CUDA、OpenCL、SYCL 各修一处",
+      "verdict": "滚动 nightly 没有大新闻，但三个后端的边界问题被逐个补上。",
+      "why": "本地推理的可用性靠这类后端细节累积，跟踪硬件适配的人值得看。",
+      "facts": [
+        "b12316：CUDA MMQ stream-k fixup 跳过空 MoE tile，避免越界读取（官方称结果不受影响），并补测试。",
+        "b12317：OpenCL 新增高通 Adreno A7 的 Q4_0 非 MoE bin 内核（PR #30947）。",
+        "b12318：CUDA 增加调试缓冲池，配合 compute-sanitizer 使用。",
+        "b12319：SYCL set_main_device 改用线程本地缓存设备 ID，省去每次图计算开头的锁查找。"
+      ],
+      "scenes": [
+        "在 NVIDIA GPU 上跑 MoE 模型的用户。",
+        "在骁龙 / Adreno 设备上做端侧推理的开发者。",
+        "跟踪 Intel GPU（SYCL）后端的贡献者。"
+      ],
+      "event": "2026-11-12 llama.cpp 连续发布 b12316–b12319 四个 nightly 构建。",
+      "caveat": "滚动构建非稳定版；描述取自官方发布说明，本站未复测；单条构建不构成升级理由。",
+      "sources": [
+        {
+          "id": "llama-b12316",
+          "url": "https://github.com/ggml-org/llama.cpp/releases/tag/b12316",
+          "title": "llama.cpp b12316",
+          "publisher": "ggml-org/llama.cpp",
+          "publishedAt": "2026-11-12T06:25:50Z",
+          "publishedPrecision": "second",
+          "checkedAt": "2026-11-12T17:40:00Z",
+          "verification": "github-api"
+        },
+        {
+          "id": "llama-b12317",
+          "url": "https://github.com/ggml-org/llama.cpp/releases/tag/b12317",
+          "title": "llama.cpp b12317",
+          "publisher": "ggml-org/llama.cpp",
+          "publishedAt": "2026-11-12T06:58:35Z",
+          "publishedPrecision": "second",
+          "checkedAt": "2026-11-12T17:40:00Z",
+          "verification": "github-api"
+        },
+        {
+          "id": "llama-b12318",
+          "url": "https://github.com/ggml-org/llama.cpp/releases/tag/b12318",
+          "title": "llama.cpp b12318",
+          "publisher": "ggml-org/llama.cpp",
+          "publishedAt": "2026-11-12T11:36:10Z",
+          "publishedPrecision": "second",
+          "checkedAt": "2026-11-12T17:40:00Z",
+          "verification": "github-api"
+        },
+        {
+          "id": "llama-b12319",
+          "url": "https://github.com/ggml-org/llama.cpp/releases/tag/b12319",
+          "title": "llama.cpp b12319",
+          "publisher": "ggml-org/llama.cpp",
+          "publishedAt": "2026-11-12T16:34:48Z",
+          "publishedPrecision": "second",
+          "checkedAt": "2026-11-12T17:40:00Z",
+          "verification": "github-api"
+        }
+      ],
+      "src": "官方发布说明"
+    }
+  ],
+  "brief": [
+    {
+      "itemId": "google-decisions-api",
+      "text": "Google 把批量判断做成专用 API：一次前向最多 1000 个问题，只按输入计费。"
+    },
+    {
+      "itemId": "browser-use-103",
+      "text": "browser-use 1.0.3 修复 CLI 管道、无显示环境、CDP 连接与取消下载四类边界问题。"
+    },
+    {
+      "itemId": "codex-01672",
+      "text": "Codex CLI 在 Vertex AI 上默认增量发送工具更新，可用配置回退。"
+    },
+    {
+      "itemId": "llama-cpp-builds-1112",
+      "text": "llama.cpp 一天四个 nightly：CUDA 空 tile、Adreno 内核、SYCL 设备缓存各修一处。"
+    }
+  ],
+  "amendments": []
+}

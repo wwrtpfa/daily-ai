@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-13",
+  "note": "决策层：独立于已发布的 content/days/<date>.json，可迭代；分组与动作句是编辑判断，不是官方结论，也不能改写已发布事实。目标锚点由生成器按原条目序号与分组键生成。",
+  "editorialNote": "「今天该做 / 记一笔」是本站的阅读建议，不是厂商结论；动作句含编辑判断，事实与来源仍以展开区为准。",
+  "headline": "今天 2 件值得动手，2 件记一笔就好。",
+  "accent": "2 件值得动手",
+  "summary": "两条值得动手：试 Decisions API 免费层，或把 browser-use 精确升到 1.0.3。Codex 只影响 Vertex AI 用户，llama.cpp 是滚动构建，记一笔即可。",
+  "lens": [
+    { "label": "做路由 / 审核 / 评分", "target": "#item-0" },
+    { "label": "跑浏览器 Agent", "target": "#item-1" },
+    { "label": "用 Codex + Vertex AI", "target": "#item-2" },
+    { "label": "只是看看", "target": "#group-note" }
+  ],
+  "groups": [
+    { "key": "do", "label": "今天该做", "note": "2 条 · 有条件才动手" },
+    { "key": "note", "label": "记一笔，先别动", "note": "2 条 · 影响面有限" }
+  ],
+  "items": {
+    "google-decisions-api": {
+      "group": "do",
+      "level": "今天该做",
+      "action": "在做路由、审核或评分的团队，今天在 AI Studio 拿 key 跑一遍免费层，用置信度阈值接一个兜底分支。",
+      "relevantIf": "你的系统里有「选一个 / 判一下 / 打个分」的高频调用，且在意延迟和成本。",
+      "skipIf": "没有这类调用，今天可以跳过。"
+    },
+    "browser-use-103": {
+      "group": "do",
+      "level": "今天该做",
+      "action": "在跑 browser-use 的项目，把版本精确升到 ==1.0.3，重点回归 CLI MCP 与无显示环境。",
+      "relevantIf": "你在生产或 CI 里用 browser-use，尤其是 --cli-mcp 或容器环境。",
+      "skipIf": "没用 browser-use，今天可以跳过。"
+    },
+    "codex-01672": {
+      "group": "note",
+      "level": "记一笔",
+      "action": "用 Vertex AI 接 Codex 的团队记一笔：工具更新默认增量发送，异常时可用配置回退。",
+      "relevantIf": "你通过 Google Cloud Vertex AI 使用 Codex CLI。",
+      "skipIf": "不用 Vertex AI，这条与你无关。"
+    },
+    "llama-cpp-builds-1112": {
+      "group": "note",
+      "level": "记一笔",
+      "action": "跟踪 CUDA / Adreno / SYCL 后端的人看一眼四个构建的修复点，不必今天升级。",
+      "relevantIf": "你在对应硬件上跑 llama.cpp，或维护端侧推理适配。",
+      "skipIf": "只用稳定版的话，今天不用动。"
+    }
+  }
+}

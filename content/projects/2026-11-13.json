@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-13",
+  "collectedAt": "2026-11-12T17:35:00Z",
+  "projects": [
+    {
+      "name": "ggml-org/llama.cpp",
+      "lang": "C++",
+      "license": "MIT",
+      "oneline": "用 C/C++ 在本地与云端跑 LLM / VLM 推理，覆盖从 CPU 到各家 GPU 的硬件。",
+      "problem": "把「最小依赖、广泛硬件、量化推理」放在同一个引擎里，让模型不必绑定某一家推理服务。",
+      "scenes": [
+        "在 Mac / PC / 服务器上离线跑开源模型。",
+        "用 OpenAI 兼容接口自建推理服务。",
+        "在移动端与边缘设备（骁龙、Apple Silicon 等）做端侧推理。"
+      ],
+      "notFor": "需要托管 SLA、开箱即用的多租户计费与合规审计的团队；它是要自己构建运维的引擎。",
+      "whyToday": "今日窗口内发布 b12316–b12319 四个 nightly 构建（见今日条目）；累计星标是采集时快照，不是当天热度排名。",
+      "whyWeek": "本周仅建立首个真实快照；无历史基线，不能计算周增量或判断持续热度。",
+      "topics": ["local-inference", "ggml", "quantization"],
+      "day": { "total": 134401, "delta": null },
+      "week": { "total": 134401, "delta": null },
+      "alt": "vLLM、Ollama、MLC LLM；硬件覆盖与部署形态不同，需分别核对。",
+      "collectedAt": "2026-11-12T17:35:00Z",
+      "sources": [
+        { "url": "https://github.com/ggml-org/llama.cpp", "title": "仓库与 README" },
+        { "url": "https://api.github.com/repos/ggml-org/llama.cpp", "title": "GitHub API 快照" }
+      ]
+    },
+    {
+      "name": "browser-use/browser-use",
+      "lang": "Python",
+      "license": "MIT",
+      "oneline": "开源浏览器 Agent：模型在持久 REPL 里写 Python，经 CDP 驱动真实浏览器完成任务。",
+      "problem": "把「给一个任务」变成「在真实网页里点击、输入、下载并交付结果」，而不是只生成一段操作说明。",
+      "scenes": [
+        "预约、填表、比价这类多步网页操作。",
+        "在 CI 或容器里跑无头浏览器自动化。",
+        "作为 MCP 服务接进编码 Agent，让它自己查网页。"
+      ],
+      "notFor": "要求强沙箱隔离的场景：README 明确模型写的 Python 能读到敏感值，域名限制是护栏不是沙箱；共享机器上本地调试端口无鉴权。",
+      "whyToday": "今日发布 1.0.3 稳定性修复（见今日条目）；官方要求精确锁版本升级。",
+      "whyWeek": "本周仅建立首个真实快照；无历史基线，不能计算周增量或判断持续热度。",
+      "topics": ["browser-agent", "automation", "mcp"],
+      "day": { "total": 120836, "delta": null },
+      "week": { "total": 120836, "delta": null },
+      "alt": "Playwright 脚本、Stagehand、托管 RPA；确定性与模型自由度取舍不同。",
+      "collectedAt": "2026-11-12T17:35:00Z",
+      "sources": [
+        { "url": "https://github.com/browser-use/browser-use", "title": "仓库与 README" },
+        { "url": "https://api.github.com/repos/browser-use/browser-use", "title": "GitHub API 快照" }
+      ]
+    },
+    {
+      "name": "openai/codex",
+      "lang": "Rust",
+      "license": "Apache-2.0",
+      "oneline": "OpenAI 的本地编码 Agent，在终端里读代码、改文件、跑命令。",
+      "problem": "把编码任务交给本地 CLI 执行，同时保留 ChatGPT 订阅或 API key 两种计费入口。",
+      "scenes": [
+        "在既有仓库里实现需求、修 bug、写测试。",
+        "在 IDE（VS Code / Cursor / Windsurf）或桌面应用中使用同一 Agent。",
+        "通过 Vertex AI 等企业接入使用模型。"
+      ],
+      "notFor": "要求完全离线或模型权重可自持的场景；CLI 开源但依赖 OpenAI 模型服务。",
+      "whyToday": "今日窗口内发布 rust-v0.167.2（见今日条目），变化集中在 Vertex AI 接入层。",
+      "whyWeek": "本周仅建立首个真实快照；无历史基线，不能计算周增量或判断持续热度。",
+      "topics": ["agent", "developer-tools"],
+      "day": { "total": 135027, "delta": null },
+      "week": { "total": 135027, "delta": null },
+      "alt": "Claude Code、Aider、Gemini CLI；许可与数据策略需分别核对。",
+      "collectedAt": "2026-11-12T17:35:00Z",
+      "sources": [
+        { "url": "https://github.com/openai/codex", "title": "仓库与 README" },
+        { "url": "https://api.github.com/repos/openai/codex", "title": "GitHub API 快照" }
+      ]
+    }
+  ]
+}

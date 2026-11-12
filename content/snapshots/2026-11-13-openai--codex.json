@@ -1,0 +1,17 @@
+{
+  "repo": "openai/codex",
+  "collectedAt": "2026-11-12T17:35:00Z",
+  "apiUrl": "https://api.github.com/repos/openai/codex",
+  "stars": 135027,
+  "language": "Rust",
+  "license": {
+    "key": "apache-2.0",
+    "name": "Apache License 2.0",
+    "spdx_id": "Apache-2.0",
+    "url": "https://api.github.com/licenses/apache-2.0",
+    "node_id": "MDc6TGljZW5zZTI="
+  },
+  "pushedAt": "2026-11-12T17:31:57Z",
+  "archived": false,
+  "description": "Lightweight coding agent that runs in your terminal"
+}

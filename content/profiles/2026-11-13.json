@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-13",
+  "note": "介绍层：独立于已发布的项目快照 content/projects/<date>.json，可迭代；不改写已发布事实。命令、清单与描述据官方 README 归纳，含编辑判断，来源见各档案。",
+  "editorialNote": "以下介绍据官方 README 与 GitHub API 快照归纳，含编辑判断；命令和数字可回查来源。本站未运行安装、示例或性能实测。",
+  "profiles": [
+    {
+      "name": "ggml-org/llama.cpp",
+      "todayItem": "llama-cpp-builds-1112",
+      "problem": "官方 README 的目标是「以最小配置和最先进性能，在广泛硬件上本地或云端跑 LLM / VLM 推理」：纯 C/C++ 无依赖实现，Apple Silicon 一等公民，x86 有 AVX/AMX，支持 1.5–8bit 量化与 CPU+GPU 混合推理。它解决的是「模型必须绑定某家推理服务」的问题，把引擎拿回自己手里。",
+      "whoFor": [
+        "想在 Mac / PC / 服务器上离线跑开源模型的个人开发者。",
+        "要自建 OpenAI 兼容推理服务、控制数据不出域的团队。",
+        "在骁龙、Apple Silicon、Intel GPU 等特定硬件上做端侧适配的工程师。"
+      ],
+      "howTo": {
+        "intro": "官方 Quick start：脚本安装或 Docker / 预编译二进制 / 源码构建任选；安装后可直接从 Hugging Face 拉模型运行。",
+        "steps": [
+          { "label": "安装 · macOS / Linux", "cmd": "curl -LsSf https://llama.app/install.sh | sh" },
+          { "label": "安装 · Windows PowerShell", "cmd": "irm https://llama.app/install.ps1 | iex" },
+          { "label": "下载并运行模型", "cmd": "llama cli -hf ggml-org/Qwen3.5-0.8B-GGUF" },
+          { "label": "启动 OpenAI 兼容服务", "cmd": "llama serve -hf ggml-org/Qwen3.5-0.8B-GGUF" }
+        ],
+        "note": "README 另给出 llama.app 指引、Docker 文档、releases 预编译包与源码构建指南；示例模型以官方 README 当前写法为准。本站未实测安装与推理。"
+      },
+      "caveat": "MIT 许可指引擎代码；模型权重许可需逐个核对。nightly 构建（b*）滚动发布，不等于稳定版；后端表含 In Progress 项目，不代表本站实测可用。今日四个构建的修复效果未复测。",
+      "backends": [
+        { "name": "BLAS", "target": "通用" },
+        { "name": "BLIS", "target": "通用" },
+        { "name": "CANN", "target": "华为昇腾 NPU" },
+        { "name": "CUDA", "target": "NVIDIA GPU" },
+        { "name": "HIP", "target": "AMD GPU" },
+        { "name": "Hexagon", "target": "骁龙" },
+        { "name": "IBM zDNN", "target": "IBM Z 与 LinuxONE" },
+        { "name": "MUSA", "target": "摩尔线程 GPU" },
+        { "name": "Metal", "target": "Apple Silicon" },
+        { "name": "OpenCL", "target": "Adreno GPU" },
+        { "name": "OpenVINO（进行中）", "target": "Intel CPU / GPU / NPU" },
+        { "name": "RPC", "target": "通用" },
+        { "name": "SYCL", "target": "Intel GPU" },
+        { "name": "VirtGPU", "target": "VirtGPU APIR" },
+        { "name": "Vulkan", "target": "GPU" },
+        { "name": "WebGPU", "target": "通用" },
+        { "name": "ZenDNN", "target": "AMD CPU" }
+      ],
+      "sources": [
+        { "url": "https://github.com/ggml-org/llama.cpp/blob/master/README.md", "title": "官方 README · Quick start / Supported backends" },
+        { "url": "https://github.com/ggml-org/llama.cpp", "title": "仓库与 README" },
+        { "url": "https://api.github.com/repos/ggml-org/llama.cpp", "title": "GitHub API 快照" }
+      ]
+    },
+    {
+      "name": "browser-use/browser-use",
+      "todayItem": "browser-use-103",
+      "problem": "官方 README 的定义是「开源浏览器 Agent」：给一个任务，模型在持久 REPL 里写 Python，用 browser-harness 辅助函数和原始 CDP 驱动真实浏览器。它把「模型 + REPL + CDP」作为整个 Agent，替代为每个网站写死选择器的脚本思路；可跑任意 LLM，本地或 Browser Use Cloud。",
+      "whoFor": [
+        "要做预约、填表、比价等多步网页操作的自动化开发者。",
+        "想让编码 Agent 通过 MCP 自己查网页、验证结果的团队。",
+        "需要云端 stealth 浏览器、验证码处理与录制回放的用户（Cloud 为付费服务）。"
+      ],
+      "howTo": {
+        "intro": "官方 Quickstart 分三条路径：全托管 Cloud、CLI、Python 库。Python 3.11+；README 反复强调用 == 精确锁版本，不要 >=。",
+        "steps": [
+          { "label": "CLI 安装（官方指定精确版本）", "cmd": "uv tool install browser-use==1.0.3" },
+          { "label": "注册 Agent 技能", "cmd": "browser-use skill install" },
+          { "label": "Python 库安装（venv 内）", "cmd": "pip install 'browser-use==1.0.3'" },
+          { "label": "安装或连接出问题时自检", "cmd": "browser-use --doctor" }
+        ],
+        "note": "默认模型 bu-fast 与云浏览器走 Browser Use 网关，需要 BROWSER_USE_API_KEY；本地浏览器加自选模型用 Browser('chromium') 与 ChatOpenAI 等内置适配。从 0.x 迁移先读 MIGRATING.md。本站未实测。"
+      },
+      "caveat": "MIT 许可；但 README 明确这不是沙箱：模型写的 Python 能读到 sensitive_data 的值，截图与 js() 可能泄露；Browser('chromium') 等会在 127.0.0.1 开无鉴权调试端口，共享机器请用容器或 Cloud。云浏览器与网关模型按量计费。今日 1.0.3 修复效果未实测。",
+      "backends": [],
+      "sources": [
+        { "url": "https://github.com/browser-use/browser-use/blob/main/README.md", "title": "官方 README · Quickstart / Secrets / 版本锁定" },
+        { "url": "https://github.com/browser-use/browser-use", "title": "仓库与 README" },
+        { "url": "https://api.github.com/repos/browser-use/browser-use", "title": "GitHub API 快照" }
+      ]
+    },
+    {
+      "name": "openai/codex",
+      "todayItem": "codex-01672",
+      "problem": "官方 README 把 Codex CLI 定义为「在本地电脑运行的 OpenAI 编码 Agent」：终端里交代任务，由它读代码、改文件、执行命令；同一入口也提供 IDE 扩展、桌面应用与云端 Codex Web。它解决的是把编码任务整段委托出去、而不是逐行补全的问题。",
+      "whoFor": [
+        "在既有仓库里实现需求、修 bug、写测试的开发者。",
+        "已有 ChatGPT Plus / Pro / Business / Edu / Enterprise 订阅、想直接复用额度的用户。",
+        "通过 API key 或 Vertex AI 等企业通道接入的团队。"
+      ],
+      "howTo": {
+        "intro": "官方 Quickstart：脚本安装或包管理器安装，然后运行 codex 并选择 Sign in with ChatGPT；也可用 API key（需额外配置）。",
+        "steps": [
+          { "label": "安装 · macOS / Linux", "cmd": "curl -fsSL https://chatgpt.com/codex/install.sh | sh" },
+          { "label": "安装 · npm", "cmd": "npm install -g @openai/codex" },
+          { "label": "安装 · Homebrew", "cmd": "brew install --cask codex" },
+          { "label": "开始使用", "cmd": "codex" }
+        ],
+        "note": "Windows 用官方 install.ps1；独立安装器默认从 releases.openai.com 下载，可配置回退 GitHub Releases。README 另给出各平台二进制直装方式。本站未实测。"
+      },
+      "caveat": "仓库为 Apache-2.0，但运行时依赖 OpenAI 模型服务，计费与数据策略按 ChatGPT 计划或 API 条款核对；CLI 开源不等于模型开放。今日 rust-v0.167.2 的 Vertex AI 行为变化未实测。",
+      "backends": [],
+      "sources": [
+        { "url": "https://github.com/openai/codex/blob/main/README.md", "title": "官方 README · Quickstart / 许可" },
+        { "url": "https://github.com/openai/codex", "title": "仓库与 README" },
+        { "url": "https://api.github.com/repos/openai/codex", "title": "GitHub API 快照" }
+      ]
+    }
+  ]
+}

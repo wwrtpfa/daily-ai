@@ -1,0 +1,17 @@
+{
+  "repo": "browser-use/browser-use",
+  "collectedAt": "2026-11-12T17:35:00Z",
+  "apiUrl": "https://api.github.com/repos/browser-use/browser-use",
+  "stars": 120836,
+  "language": "Python",
+  "license": {
+    "key": "mit",
+    "name": "MIT License",
+    "spdx_id": "MIT",
+    "url": "https://api.github.com/licenses/mit",
+    "node_id": "MDc6TGljZW5zZTEz"
+  },
+  "pushedAt": "2026-11-12T17:20:40Z",
+  "archived": false,
+  "description": "Open-source Python library for AI browser agents, plus Browser Use Cloud: stealth browsers and a hosted agent API."
+}

@@ -2,35 +2,38 @@
   "schemaVersion": 1,
   "entries": [
     {
-      "date": "2026-11-10",
-      "itemId": "anthropic-fable-mythos-52",
-      "fingerprint": "a989f1582084d0cf153c32d2fa32483a4ec12dee696b65f0f20a1d5ab4b8abfd",
+      "date": "2026-11-13",
+      "itemId": "google-decisions-api",
+      "fingerprint": "02bfed5e7aa817ea9dcb99d63f8534e8e78ab10e8ae50e00c6e9b6a68bd6b403",
       "urls": [
-        "https://www.anthropic.com/claude-fable-and-mythos-5-2"
+        "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api"
       ]
     },
     {
-      "date": "2026-11-10",
-      "itemId": "adobe-disney-alliance",
-      "fingerprint": "a38e8333ef55c6e595c303928655a14b90de07a4169f835980f3897c958766ba",
+      "date": "2026-11-13",
+      "itemId": "browser-use-103",
+      "fingerprint": "6c692ff74ed43d907daacbcc17c79f00d232129ca6760755258de58578a6d2bc",
       "urls": [
-        "https://news.adobe.com/news/2026/11/adobe-and-the-walt-disney-company-alliance"
+        "https://github.com/browser-use/browser-use/releases/tag/1.0.3"
       ]
     },
     {
-      "date": "2026-11-10",
-      "itemId": "claude-code-21321",
-      "fingerprint": "ace31f3b0bb1b6f07ef93a70e921fede0960c848287ce911677409ebd0b28f56",
+      "date": "2026-11-13",
+      "itemId": "codex-01672",
+      "fingerprint": "917e81f74d6a6479d67199d6ae0e103fdfd964f54c5470a7cb3627ea74ec655f",
       "urls": [
-        "https://github.com/anthropics/claude-code/releases/tag/v2.1.321"
+        "https://github.com/openai/codex/releases/tag/rust-v0.167.2"
       ]
     },
     {
-      "date": "2026-11-10",
-      "itemId": "llama-cpp-b12244",
-      "fingerprint": "d646da872e9561cd891cfb438d2372e9f3a113befbe1e87ac360a119330574f3",
+      "date": "2026-11-13",
+      "itemId": "llama-cpp-builds-1112",
+      "fingerprint": "2e77bbdaf8c51d9520332360bfda206e06853265dfbf4e5ac0f2100e2ba1cf94",
       "urls": [
-        "https://github.com/ggml-org/llama.cpp/releases/tag/b12244"
+        "https://github.com/ggml-org/llama.cpp/releases/tag/b12316",
+        "https://github.com/ggml-org/llama.cpp/releases/tag/b12317",
+        "https://github.com/ggml-org/llama.cpp/releases/tag/b12318",
+        "https://github.com/ggml-org/llama.cpp/releases/tag/b12319"
       ]
     }
   ]
