@@ -51,7 +51,7 @@ def token_css():
 
 
 def link(url, label, cls=''):
-    return f'<a class="{cls}" href="{esc(url, quote=True)}" target="_blank" rel="noopener noreferrer">{esc(label)} ↗</a>'
+    return f'<a class="{cls}" href="{esc(url, quote=True)}" target="_blank" rel="noopener noreferrer">{esc(label)}</a>'
 
 
 def period_links(prefix, date=None):
@@ -84,7 +84,7 @@ def layout(body, view='today', date=TODAY, prefix='', title='今日'):
                          ensure_ascii=False).replace('<', chr(92)+'u003c')
     return f'''<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta name="description" content="每日 AI 与 GitHub 动态，附官方来源、事实与边界。"><title>{esc(title)} · 信号 SIGNAL</title><link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="{prefix}tokens.css?v={version}"><link rel="stylesheet" href="{prefix}style.css?v={version}"><script src="{prefix}app.js?v={version}" defer></script></head>
-<body data-view="{view}" data-date="{date}" data-prefix="{prefix}"><a class="skip" href="#main">跳到正文</a><div class="shell"><header class="top"><a class="brand" href="{prefix}index.html"><span class="brand-symbol" aria-hidden="true"><i></i><i></i><i></i></span><span class="brand-name">信号<small>SIGNAL</small></span></a><p class="brand-note">把变化读明白。</p><nav class="nav" aria-label="主导航">{navigation}</nav><div class="rail-bottom"><span>每日 AI / GitHub</span><a href="{prefix}status.html">出刊状态 <span aria-hidden="true">↗</span></a><p>独立阅读 · 无账号</p><span class="rail-edition">VOL. {ISSUES[date]['no']:03d} / 2026</span></div></header><div class="workspace"><div class="workspace-top"><span>{dict((name,label) for name,_,label,_ in nav).get(view,'出刊状态')}</span><div><span class="demo-label">每日简报</span><a href="{prefix}archive.html?search=1" aria-label="搜索往期">检索 <kbd>/</kbd></a></div></div>
+<body data-view="{view}" data-date="{date}" data-prefix="{prefix}"><a class="skip" href="#main">跳到正文</a><div class="shell"><header class="top"><a class="brand" href="{prefix}index.html"><span class="brand-symbol" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><circle class="radar-ring" cx="16" cy="16" r="13" stroke-width="1.3"/><circle class="radar-ring" cx="16" cy="16" r="8.5" stroke-width="1.1"/><circle class="radar-ring" cx="16" cy="16" r="4" stroke-width="1"/><path class="radar-tick" d="M16 1.5v3M16 27.5v3M1.5 16h3M27.5 16h3" stroke-width="1.2" stroke-linecap="round"/><g class="radar-sweep"><path d="M16 16 L16 3 A13 13 0 0 1 27.3 9.5 Z"/><line x1="16" y1="16" x2="16" y2="3"/></g><circle class="radar-blip" cx="21" cy="11" r="1.5"/><circle class="radar-blip" cx="11" cy="20" r="1.2" opacity=".6"/></svg></span><span class="brand-name">信号<small>SIGNAL</small></span></a><p class="brand-note">把变化读明白。</p><nav class="nav" aria-label="主导航">{navigation}</nav><div class="rail-bottom"><span>每日 AI / GitHub</span><a href="{prefix}status.html">出刊状态 <span aria-hidden="true">↗</span></a><p>独立阅读 · 无账号</p><span class="rail-edition">VOL. {ISSUES[date]['no']:03d} / 2026</span></div></header><div class="workspace"><div class="workspace-top"><span>{dict((name,label) for name,_,label,_ in nav).get(view,'出刊状态')}</span><div><span class="demo-label">每日简报</span><a href="{prefix}archive.html?search=1" aria-label="搜索往期">检索 <kbd>/</kbd></a></div></div>
 <main id="main" class="reading">{body}</main>{footer(prefix,date)}</div></div>{dialog()}<script type="application/json" id="prototype-data">{payload}</script></body></html>'''
 
 def evidence(it):
@@ -95,12 +95,13 @@ def evidence(it):
 
 def item(it, idx, date, decision=None):
     """Original index is preserved so archive/permalink anchors never move."""
+    kind_ic = 'ic-branch' if 'GITHUB' in it['cat'].upper() else 'ic-sparkles'
     if decision:
-        meta = f'''<div class="decision-head"><span class="number">{idx+1:02d}</span><span class="level-tag{' subtle' if decision['group'] != 'do' else ''}">{esc(decision['level'])}</span><span class="item-meta">{esc(it['cat'])}</span></div>
+        meta = f'''<div class="decision-head"><span class="number">{idx+1:02d}</span><span class="level-tag{' subtle' if decision['group'] != 'do' else ''}">{esc(decision['level'])}</span><span class="item-meta"><i class="ic {kind_ic}" aria-hidden="true"></i>{esc(it['cat'])}</span></div>
     <p class="action">{esc(decision['action'])}</p><p class="rel"><span class="k">与你有关，如果</span>{esc(decision['relevantIf'])}</p><p class="skip-line"><span class="k">否则</span>{esc(decision['skipIf'])}</p>'''
         cls = 'item decision-item'
     else:
-        meta = f'<p class="item-meta"><span class="number">{idx+1:02d}</span><span>{esc(it["cat"])}</span></p>'
+        meta = f'<p class="item-meta"><span class="number">{idx+1:02d}</span><i class="ic {kind_ic}" aria-hidden="true"></i><span>{esc(it["cat"])}</span></p>'
         cls = 'item'
     return f'''<article class="{cls}" id="item-{idx}" data-item="{idx}" data-kind="{'github' if 'GITHUB' in it['cat'].upper() else 'ai'}">{meta}<h2><a href="#item-{idx}">{esc(it['title'])}</a></h2><p class="verdict">{marked(it['verdict'])}</p><p class="why">{esc(it['why'])}</p>{evidence(it)}<div class="item-actions"><button class="take js-only inline" data-action="take" data-index="{idx}" aria-pressed="false">带走这条</button><a href="#item-{idx}" aria-label="第 {idx+1} 条固定位置">定位此条</a></div></article>'''
 
@@ -137,7 +138,7 @@ def today(date, prefix):
     dec = DECISIONS.get(date)
     idx = DATES.index(date)
     prev = f'<a href="{prefix}d/{DATES[idx-1]}.html">上一期 · {esc(ISSUES[DATES[idx-1]]["short"])}</a>' if idx else '<span>最早一期</span>'
-    nxt = f'<a href="{prefix}d/{DATES[idx+1]}.html">下一期 →</a>' if idx < len(DATES)-1 else '<span>已是最新一期</span>'
+    nxt = f'<a href="{prefix}d/{DATES[idx+1]}.html">下一期</a>' if idx < len(DATES)-1 else '<span>已是最新一期</span>'
     amendments = ''.join('<section class="section"><h2>勘误与补充</h2><p>'+esc(a['createdAt'])+' · '+esc(a['text'])+'</p></section>' for a in d['amendments'])
     if dec:
         # Contents follows the decision reading order; anchors keep their original
@@ -153,9 +154,9 @@ def today(date, prefix):
     toc = ''.join(f'<a href="#item-{i}"><span>{i+1:02d}</span><strong>{esc(it["title"])}</strong></a>' for i, it in toc_order)
     return f'''<div class="edition"><time datetime="{date}">{date.replace('-', '.')} <span> / {DATA['WD'][date]}</span></time><span>第 {d['no']:03d} 期 · 官方来源</span></div>
     {hero}
-    <div class="daily-grid"><section class="daily-reading" id="daily-content"><div class="toolbar"><h2 class="label">今日动态 <span>{len(d['items']):02d}</span></h2><div class="tools js-only"><button data-action="share">生成分享图<span data-selection-count></span> ↗</button></div></div><div class="items">{items_html}</div></section>
-    <aside class="issue-aside"><section class="toc"><div class="aside-heading"><h2>本期目录</h2><span>CONTENTS</span></div>{toc}</section><section class="aside-projects"><div class="aside-heading"><h2>项目速递</h2><a href="{prefix}projects.html">全部 ↗</a></div>{''.join(teaser(p,prefix) for p in PROJECTS[:2])}</section><a class="previous-edition" href="{prefix}archive.html"><span>错过了哪一期？</span><strong>去往期接着读 ↗</strong></a></aside></div>
-    {amendments}<section class="closing"><div><h2>值得带走的，不止一个标题。</h2><p>选好想继续了解的内容，留一份给自己。</p></div><div class="links"><button class="js-only inline" data-action="share">生成分享图 ↗</button><a href="{prefix}downloads/{date}.md" download>下载文字版</a><a href="{prefix}feed.xml">RSS</a><a href="{prefix}daily.ics" download>阅读提醒</a></div><p class="fine">日历提醒需导入后生效；新闻边界与原始来源见条目展开。</p></section><div class="pager">{prev}{nxt}</div>'''
+    <div class="daily-grid"><section class="daily-reading" id="daily-content"><div class="toolbar"><h2 class="label">今日动态 <span>{len(d['items']):02d}</span></h2><div class="tools js-only"><button data-action="share">生成分享图<span data-selection-count></span></button></div></div><div class="items">{items_html}</div></section>
+    <aside class="issue-aside"><section class="toc"><div class="aside-heading"><h2>本期目录</h2><span>CONTENTS</span></div>{toc}</section><section class="aside-projects"><div class="aside-heading"><h2>项目速递</h2><a href="{prefix}projects.html">全部</a></div>{''.join(teaser(p,prefix) for p in PROJECTS[:2])}</section><a class="previous-edition" href="{prefix}archive.html"><span>错过了哪一期？</span><strong>去往期接着读</strong></a></aside></div>
+    {amendments}<section class="closing"><div><h2>值得带走的，不止一个标题。</h2><p>选好想继续了解的内容，留一份给自己。</p></div><div class="links"><button class="js-only inline" data-action="share">生成分享图</button><a href="{prefix}downloads/{date}.md" download>下载文字版</a><a href="{prefix}feed.xml">RSS</a><a href="{prefix}daily.ics" download>阅读提醒</a></div><p class="fine">日历提醒需导入后生效；新闻边界与原始来源见条目展开。</p></section><div class="pager">{prev}{nxt}</div>'''
 
 
 def growth(value):
@@ -227,6 +228,7 @@ def profile(p, today_ids):
     <div class="pf-cols"><section class="pf-block"><h3>谁在用</h3><ul>{who}</ul></section><section class="pf-block"><h3>什么时候别用 / 边界</h3><p>{esc(p['not'])}</p><p class="caveat">{esc(p.get('caveat', ''))}</p></section></div>
     {how_to(p)}
     <div class="pf-data"><div><span>累计星标</span><strong>{snap['stars']:,}</strong></div><div><span>主语言</span><strong>{esc(snap['language'] or '未标注')}</strong></div><div><span>许可</span><strong>{esc(p['license'])}</strong></div><div><span>最近推送</span><strong>{esc(pushed)} UTC</strong></div></div>
+    <p class="fine pf-growth"><i class="ic ic-activity" aria-hidden="true"></i><span data-growth>今日增量 {growth(p['day']['delta'])}</span></p>
     <details class="evidence"><summary>完整事实 · 后端清单 · 来源与口径</summary><div class="evidence-body"><h3>适用场景</h3><ul>{scenes}</ul><h3>为什么现在关注</h3><p data-day-reason>{esc(p['why'])}</p><p data-week-reason hidden>{esc(p['whyWeek'])}</p><h3>同类可选</h3><p>{esc(p['alt'])}</p>{backend_table(p)}<h3>采集快照</h3><p>累计星标 {p['day']['total']:,} · 今日增量 {growth(p['day']['delta'])} · 本周增量 {growth(p['week']['delta'])}</p><p class="fine">采集于 {esc(snap['collectedAt'])}；仓库归档状态：{'是' if snap['archived'] else '否'}。增量需相同时间基准的历史快照。</p><h3>来源</h3><div class="source-links">{sources}</div></div></details></article>'''
 
 
@@ -263,7 +265,7 @@ def week():
     covered = [dt for dt in DATES if start <= dt <= TODAY]
     sections = ''.join(f'<section class="week-theme"><h2>{dt}</h2><ul>'+''.join(f'<li><a href="d/{dt}.html#item-{i}">{esc(it["title"])}</a></li>' for i,it in enumerate(ISSUES[dt]['items']))+'</ul></section>' for dt in reversed(covered))
     note = f'近七天已有 {len(covered)} 期真实记录。' + ('历史不足七天，暂不推断趋势或项目周增量。' if len(covered)<7 else '沿具体条目回看变化，不将报道次数等同于热度。')
-    return f'''<div class="edition"><span>近七天</span><span>{start} — {TODAY}</span></div><section class="hero"><h1>一周的进展，<mark>连起来看</mark>。</h1><p class="intro">{note}</p></section><div class="week-grid">{sections}</div><section class="section"><div class="section-head"><h2>项目观察</h2><a href="projects.html?period=week">查看项目 →</a></div>{''.join(teaser(p,'') for p in PROJECTS[:3])}</section>'''
+    return f'''<div class="edition"><span>近七天</span><span>{start} — {TODAY}</span></div><section class="hero"><h1>一周的进展，<mark>连起来看</mark>。</h1><p class="intro">{note}</p></section><div class="week-grid">{sections}</div><section class="section"><div class="section-head"><h2>项目观察</h2><a href="projects.html?period=week">查看项目</a></div>{''.join(teaser(p,'') for p in PROJECTS[:3])}</section>'''
 
 
 def status():
@@ -286,7 +288,7 @@ def make_art():
     (OUT/'assets'/'delivery.svg').write_text(svg)
     mobile = f'''<svg xmlns="http://www.w3.org/2000/svg" width="420" height="115" viewBox="0 0 420 115"><defs><linearGradient id="g"><stop stop-color="{a['node']}"/><stop offset="1" stop-color="{a['panel']}"/></linearGradient></defs><g font-family="sans-serif" font-size="13" fill="{a['ink']}"><rect x="16" y="20" width="126" height="70" rx="12" fill="url(#g)" stroke="{a['line']}"/><rect x="147" y="14" width="126" height="70" rx="12" fill="url(#g)" stroke="{a['line']}"/><rect x="278" y="20" width="126" height="70" rx="12" fill="url(#g)" stroke="{a['line']}"/><text x="34" y="46" font-size="9" fill="{a['secondary']}">01 / UNDERSTAND</text><text x="34" y="70">理解问题</text><text x="165" y="40" font-size="9" fill="{a['secondary']}">02 / BUILD</text><text x="165" y="64">拆解与执行</text><text x="296" y="46" font-size="9" fill="{a['secondary']}">03 / DELIVER</text><text x="296" y="70">完整交付 ↗</text></g></svg>'''
     (OUT/'assets'/'delivery-mobile.svg').write_text(mobile)
-    (OUT/'assets'/'favicon.svg').write_text(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="{a["background"]}"/><path d="M8 24V16M16 24V8M24 24V12" stroke="{a["ink"]}" stroke-width="4"/></svg>')
+    (OUT/'assets'/'favicon.svg').write_text(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="{a["background"]}"/><g fill="none" stroke="{a["ink"]}"><circle cx="16" cy="16" r="11" stroke-width="1.4" opacity=".4"/><circle cx="16" cy="16" r="6.5" stroke-width="1.2" opacity=".55"/></g><path d="M16 16 L16 5 A11 11 0 0 1 25.5 10.5 Z" fill="{a["ink"]}" opacity=".22"/><path d="M16 16V5" stroke="{a["ink"]}" stroke-width="1.8" stroke-linecap="round"/><circle cx="20.5" cy="11.5" r="1.8" fill="{a["ink"]}"/></svg>')
 
 
 def resources():
